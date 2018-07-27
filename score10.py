@@ -1,4 +1,5 @@
 import random
+from collections import defaultdict
 
 
 class Character():
@@ -124,6 +125,9 @@ print(
             "", * [str(char())[:4] for char in characters]
             )
 )
+
+overall_score = defaultdict(int)
+print("----------|" + "----|" * len(characters))
 for player1 in characters:
     record = []
     for player2 in characters:
@@ -131,9 +135,16 @@ for player1 in characters:
         for i in range(10):
             wins += Game(player1(), player2()).play()
         record.append(wins)
+        overall_score[player1] += wins
+        overall_score[player2] -= wins
     print(
             ("{:10}|" + ("{:4}|"*len(characters))).format(
-                str(player1()),
+                player1.name,
                 * record
             )
         )
+print("-----------" + "-----" * len(characters))
+print("Name      |Total Score")
+print("----------|-----------")
+for player in characters:
+    print("{:10}|{}".format(player.name, overall_score[player]))
