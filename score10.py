@@ -146,5 +146,10 @@ for player1 in characters:
 print("-----------" + "-----" * len(characters))
 print("Name      |Total Score")
 print("----------|-----------")
-for player in characters:
-    print("{:10}|{}".format(player.name, overall_score[player]))
+
+scores = sorted(
+        overall_score.items(),
+        key=lambda keyval: -keyval[1]
+    )
+for player in scores:
+    print("{:10}|{}".format(player[0].name, player[1]))
