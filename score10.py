@@ -16,12 +16,12 @@ class Character():
 
 class VampCharacter(Character):
     name = "Vampire"
-    plus = .5
-    minus = .5
+    plus = .8
+    minus = .2
 
     def turn(self, opponent):
-        self.score += .8
-        opponent.score -= .2
+        self.score += plus
+        opponent.score -= minus
 
 
 class TankCharacter(Character):
