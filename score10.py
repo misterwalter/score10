@@ -4,8 +4,8 @@ from collections import defaultdict
 
 class Character():
     """Base class for all characters, with default functionality.
-    
-    Child classes don't need docstrings, because they should be extremely simple.
+
+    Child classes don't need docstrings, because they should be very simple.
     """
     name = "Basic"
     score = 0
@@ -116,6 +116,7 @@ class Game():
         else:
             return 0
 
+
 class GameManager():
     characters = [
             Character, AggroCharacter, GamblerCharacter,
@@ -132,8 +133,9 @@ class GameManager():
 
         overall_score = defaultdict(int)
 
-        # Play each AI against each other AI. player1 has some first turn advantage,
-        # But each AI also takes a turn as player2 in each matchup, so there's no overall order advantage.
+        # Play each AI against each other AI. player1 has first turn advantage,
+        # but each AI also takes a turn as player2 in each matchup,
+        # so there's no overall order advantage.
         print("----------|" + "----|" * len(self.characters))
         for player1 in self.characters:
             record = []
@@ -162,5 +164,6 @@ class GameManager():
             )
         for player in scores:
             print("{:10}|{}".format(player[0].name, player[1]))
+
 
 GameManager()
