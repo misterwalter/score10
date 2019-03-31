@@ -3,6 +3,10 @@ from collections import defaultdict
 
 
 class Character():
+    """Base class for all characters, with default functionality.
+    
+    Child classes don't need docstrings, because they should be extremely simple.
+    """
     name = "Basic"
     score = 0
     goal_score = 10
