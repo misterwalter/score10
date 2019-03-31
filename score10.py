@@ -116,42 +116,51 @@ class Game():
         else:
             return 0
 
+class GameManager():
+    characters = [
+            Character, AggroCharacter, GamblerCharacter,
+            HealerCharacter, JackpotCharacter, TankCharacter,
+            TaxCharacter, MageCharacter, VampCharacter
+            ]
 
-characters = [
-        Character, AggroCharacter, GamblerCharacter,
-        HealerCharacter, JackpotCharacter, TankCharacter,
-        TaxCharacter, MageCharacter, VampCharacter
-        ]
-print(
-        ("{:10}|" + ("{:4}|"*len(characters))).format(
-            "", * [str(char())[:4] for char in characters]
-            )
-)
-
-overall_score = defaultdict(int)
-print("----------|" + "----|" * len(characters))
-for player1 in characters:
-    record = []
-    for player2 in characters:
-        wins = 0
-        for i in range(10):
-            wins += Game(player1(), player2()).play()
-        record.append(wins)
-        overall_score[player1] += wins
-        overall_score[player2] -= wins
-    print(
-            ("{:10}|" + ("{:4}|"*len(characters))).format(
-                player1.name,
-                * record
-            )
+    def __init__(self):
+        print(
+                ("{:10}|" + ("{:4}|"*len(self.characters))).format(
+                    "", * [str(char())[:4] for char in self.characters]
+                    )
         )
-print("-----------" + "-----" * len(characters))
-print("Name      |Total Score")
-print("----------|-----------")
 
-scores = sorted(
-        overall_score.items(),
-        key=lambda keyval: -keyval[1]
-    )
-for player in scores:
-    print("{:10}|{}".format(player[0].name, player[1]))
+        overall_score = defaultdict(int)
+
+        # Play each AI against each other AI. player1 has some first turn advantage,
+        # But each AI also takes a turn as player2 in each matchup, so there's no overall order advantage.
+        print("----------|" + "----|" * len(self.characters))
+        for player1 in self.characters:
+            record = []
+            for player2 in self.characters:
+                wins = 0
+                for i in range(10):
+                    wins += Game(player1(), player2()).play()
+                record.append(wins)
+                overall_score[player1] += wins
+                overall_score[player2] -= wins
+            print(
+                    ("{:10}|" + ("{:4}|"*len(self.characters))).format(
+                        player1.name,
+                        * record
+                    )
+                )
+
+        # Print final data
+        print("-----------" + "-----" * len(self.characters))
+        print("Name      |Total Score")
+        print("----------|-----------")
+
+        scores = sorted(
+                overall_score.items(),
+                key=lambda keyval: -keyval[1]
+            )
+        for player in scores:
+            print("{:10}|{}".format(player[0].name, player[1]))
+
+GameManager()
